@@ -11,7 +11,9 @@ import com.zahi.lib.zahilib.utils.DensityUtil;
 import static android.graphics.drawable.GradientDrawable.RECTANGLE;
 
 /**
- * Created by zahi on 2019/4/11.
+ * 通过语义化的 API 创建 Shape Drawable
+ *
+ * @link https://github.com/maoruibin/maoruibin.github.com/issues/88
  */
 public class DrawableBuilder {
 
