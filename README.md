@@ -1,2 +1,2 @@
 # LibDemo
-One demo about android library useage.
+A demo about android library usage.
