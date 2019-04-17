@@ -1,9 +1,8 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
 
 android {
     compileSdkVersion 28
-
-
 
     defaultConfig {
         minSdkVersion 19
@@ -22,6 +21,18 @@ android {
         }
     }
 
+    useLibrary 'org.apache.http.legacy'
+
+    uploadArchives {
+        repositories.mavenDeployer {
+            repository(url: "http://localhost:8082/repository/com.zahi.lib/") {
+                authentication(userName: "zahi", password: "Mima1234")
+            }
+            pom.groupId = "com.zahi.lib"
+            pom.artifactId = "zahilib"
+            pom.version = android.defaultConfig.versionName
+        }
+    }
 }
 
 dependencies {
