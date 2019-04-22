@@ -30,5 +30,5 @@ dependencies {
     debugImplementation project(':zahilib')
 
     /** 线上引用使用release方式引用依赖 */
-    // releaseImplementation 'groupId:module:version'
+    releaseImplementation 'com.zahi.lib:zahilib:1.0.0'
 }
