@@ -7,7 +7,10 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.widget.TextView;
 
+import com.zahi.lib.zahilib.utils.HanziToPinyin;
 import com.zahi.lib.zahilib.widget.DrawableBuilder;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,5 +33,10 @@ public class MainActivity extends AppCompatActivity {
         arr0 = "Zero";
         array.put(1, "One");
         Log.e("MainActivity", "0 is: " + array.get(0) + ", 1 is: " + array.get(1));
+
+        ArrayList<HanziToPinyin.Token> tokens = HanziToPinyin.getInstance().get("生活大爆炸");
+        for (HanziToPinyin.Token token : tokens) {
+            Log.d("MainActivity", token.target.toLowerCase());
+        }
     }
 }
