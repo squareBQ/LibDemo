@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
+//apply plugin: 'maven'
+apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion 28
@@ -21,18 +22,49 @@ android {
         }
     }
 
-    useLibrary 'org.apache.http.legacy'
+    // publishNonDefault is deprecated and has no effect anymore. All variants are now published.
+    // publishNonDefault true
+    // defaultPublishConfig "firstRelease"
+    // this is the default flavor and is accessible at these coordinates:
+
+    flavorDimensions "dimensions"
+
+    productFlavors {
+        first {
+            dimension "dimensions"
+            //for a project that builds multiple libraries, the flavor will be at these coordinates:
+            // "com.github.<user-name>.<repository-name>:<module-name>:<github-tag>:<flavor>@aar
+            //
+            // Example for this particular demo and flavor:
+            // implementation "com.zahi.lib:zahilib:1.0.0:first@aar"
+        }
+
+        second {
+            dimension "dimensions"
+        }
+    }
+
+    // useLibrary 'org.apache.http.legacy'
 
     uploadArchives {
         repositories.mavenDeployer {
-            repository(url: "http://localhost:8082/repository/com.zahi.lib/") {
+            repository(url: "http://localhost:8085/repository/com.zahi.lib/") {
                 authentication(userName: "zahi", password: "Mima1234")
             }
             pom.groupId = "com.zahi.lib"
             pom.artifactId = "zahilib"
-            pom.version = android.defaultConfig.versionName
+            pom.version = rootProject.ext.library_version
         }
     }
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.javaDirectories
+}
+
+artifacts {
+    archives sourcesJar
 }
 
 dependencies {
@@ -42,4 +74,27 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+
+group = 'com.zahi.lib'
+version = library_version
+
+if (android.productFlavors.size() > 0) {
+    android.libraryVariants.all { variant ->
+
+        if (variant.name.toLowerCase().contains("debug")) {
+            return
+        }
+
+        def bundleTask = tasks["bundle${variant.name.capitalize()}Aar"]
+
+        artifacts {
+            archives(bundleTask.archivePath) {
+                classifier variant.flavorName
+                builtBy bundleTask
+                name = project.name
+            }
+        }
+    }
 }

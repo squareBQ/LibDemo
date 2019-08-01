@@ -9,6 +9,10 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        // Since the app does not have the same flavors and dimensions as the libraries, you have to define the fallbacks
+        // This is only for development as the ones from jitpack will already be built per flavor
+        missingDimensionStrategy "dimensions", "first", "second"
     }
     buildTypes {
         release {
@@ -16,6 +20,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+//uncomment this during development to work with the local projects instead of the ones from jitpack
+configurations.all {
+    resolutionStrategy.preferProjectModules()
 }
 
 dependencies {
@@ -26,9 +35,29 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    /** 本地调试使用debug方式引用依赖 */
-    debugImplementation project(':zahilib')
+    /** 本地调试使用debug方式引用依赖 single lib */
+    // debugImplementation project(':zahilib')
 
-    /** 线上引用使用release方式引用依赖 */
-    releaseImplementation 'com.zahi.lib:zahilib:1.0.0'
+    /** 线上引用使用release方式引用依赖 single lib */
+    // releaseImplementation 'com.zahi.lib:zahilib:1.0.0'
+
+    // As a developer of the libs you'd rather work with the local projects: {multi lib}
+    // implementation project(':zahilib')
+
+    // As a user of the published libraries:
+    // when using a particular flavor:
+    // for multi-lib
+    implementation "com.zahi.lib:zahilib:$library_version:first@aar"
+
+    // for single library
+    // implementation "com.zahi.lib:zahilib:$library_version:second@aar"
+
+    // when using the default flavor it will default to the defaultPublishConfig
+
+    // for multi-lib
+    // implementation "com.zahi.lib:zahilib:$library_version"
+    // implementation "com.zahi.lib:zahilib:$library_version"
+
+    // for single library
+    // implementation "com.zahi.lib:zahilib:$library_version"
 }
