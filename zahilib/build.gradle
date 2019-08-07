@@ -83,6 +83,7 @@ version = library_version
 if (android.productFlavors.size() > 0) {
     android.libraryVariants.all { variant ->
 
+        // skip debug builds
         if (variant.name.toLowerCase().contains("debug")) {
             return
         }
@@ -91,7 +92,7 @@ if (android.productFlavors.size() > 0) {
 
         artifacts {
             archives(bundleTask.archivePath) {
-                classifier variant.flavorName
+                classifier variant.flavorName // without build type(only flavor name)
                 builtBy bundleTask
                 name = project.name
             }

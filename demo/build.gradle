@@ -42,6 +42,7 @@ dependencies {
     // releaseImplementation 'com.zahi.lib:zahilib:1.0.0'
 
     // As a developer of the libs you'd rather work with the local projects: {multi lib}
+    // Depends on which Build Variant of libs you choose in the Build Variants.
     // implementation project(':zahilib')
 
     // As a user of the published libraries:
