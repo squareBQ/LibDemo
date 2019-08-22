@@ -43,12 +43,12 @@ dependencies {
 
     // As a developer of the libs you'd rather work with the local projects: {multi lib}
     // Depends on which Build Variant of libs you choose in the Build Variants.
-    // implementation project(':zahilib')
+    implementation project(':zahilib')
 
     // As a user of the published libraries:
     // when using a particular flavor:
     // for multi-lib
-    implementation "com.zahi.lib:zahilib:$library_version:first@aar"
+    // implementation "com.zahi.lib:zahilib:$library_version:first@aar"
 
     // for single library
     // implementation "com.zahi.lib:zahilib:$library_version:second@aar"
