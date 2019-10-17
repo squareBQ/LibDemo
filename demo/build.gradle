@@ -35,6 +35,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+    implementation 'com.blankj:utilcode:1.25.9'
+
     /** 本地调试使用debug方式引用依赖 single lib */
     // debugImplementation project(':zahilib')
 
